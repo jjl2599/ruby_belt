@@ -1,0 +1,44 @@
+<div>
+    <h3 class ='inline-block'>Welcome, <%= @current_user.name %></h3>
+    <a class='header_link' href='/logout'>Logout</a>
+</div>
+
+<form action = "/ideas" method = "post">
+  <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
+  <input type="text" id="Content" name = "idea[idea]" style="width: 300px;height:50px;"><br>
+  <input type="submit" value = "Idea!">
+</form>
+
+<div>
+  <% if flash[:idea_errors] %>
+    <% flash[:idea_errors].each do |error| %>
+      <p class="error"><%=error%></p>
+    <% end %>
+  <% end %>
+</div>
+
+
+<% @ideas.all.each do |idea| %>
+  <h2><a href="/users/<%= idea.user.id %>"><%= idea.user.name %></a> says: <%= idea.idea %></h2>
+	<% if idea.user == current_user %>
+		<form action = "/ideas/<%= idea.id %>" method = "post">
+		  <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
+			<input type="hidden" name="_method" value="delete">
+			<input type = 'submit' value = "Delete">
+		</form>
+	<% end %>
+	<% unless idea.liked_users.include?(current_user) %>
+		<form class ='inline-block' action = "/likes" method = "post">
+		  <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
+		  <input type="hidden" name="like[idea_id]" value = "<%= idea.id %>">
+			<input type="submit" name="Like" value = "Like">
+		</form>
+	<% else %>
+		<form class ='inline-block' action = "/likes/<%= Like.where(user: current_user, idea: idea).first.id%>" method = "post">
+		  <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
+			<input type="hidden" name="_method" value="delete">
+			<input type="submit" name="Unlike" value = "Unlike">
+		</form>
+	<% end %>
+  <h3 class ='inline-block'><a href="/ideas/<%= idea.id %>"><%= idea.likes.count %> people</a> liked this!</h3>
+<% end %><br>

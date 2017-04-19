@@ -1,0 +1,24 @@
+<div>
+    <a class='header_link' href='/logout'>Logout</a>
+    <a class='header_link' href="/ideas">Bright Ideas</a>
+</div>
+
+<div>
+  <h2><a href="/users/<%= @idea.user.id %>"><%= @idea.user.name %></a> says:</h2>
+  <h2><%= @idea.idea %></h2>
+</div>
+
+<div>
+  <table>
+    <tr>
+      <th>Alias</th>
+      <th>Name</th>
+    </tr>
+    <% @idea.liked_users.each do |person| %>
+      <tr>
+        <td><%= person.alias %></td>
+        <td><%= person.name %></td>
+      </tr>
+    <% end %>
+  </table>
+</div>

@@ -1,0 +1,11 @@
+<div>
+    <a class='header_link' href='/logout'>Logout</a>
+    <a class='header_link' href="/ideas">Bright Idea</a>
+</div>
+
+<h3>Name: <%= @user.name %></h3>
+<h3>Alias: <%= @user.alias %></h3>
+<h3>Email: <%= @user.email %></h3>
+________________________________________________<br>
+<h3>Total Number of Posts:<%= @user.ideas.count %></h3>
+<h3>Total Number of Likes:<%= @user.likes.count %></h3>
