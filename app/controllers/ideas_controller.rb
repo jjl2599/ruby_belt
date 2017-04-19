@@ -1,8 +1,10 @@
 class IdeasController < ApplicationController
   def index
     @ideas = Idea.all
+    @ideas_ordered = Idea.joins(:likes).group("ideas.id").order("count(likes.id) desc")
     @current_user = current_user
   end
+
 
   def show
     @idea = Idea.find(params[:id])

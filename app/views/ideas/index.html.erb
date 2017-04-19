@@ -17,8 +17,7 @@
   <% end %>
 </div>
 
-
-<% @ideas.all.each do |idea| %>
+<% @ideas_ordered.all.each do |idea| %>
   <h2><a href="/users/<%= idea.user.id %>"><%= idea.user.name %></a> says: <%= idea.idea %></h2>
 	<% if idea.user == current_user %>
 		<form action = "/ideas/<%= idea.id %>" method = "post">
